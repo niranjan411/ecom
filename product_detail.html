@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+    integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+    crossorigin="anonymous" />
+
+  <title>The Demo Company  Product Detail</title>
+
+  <style>
+    * {
+      scroll-behavior: smooth;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar-brand img {
+      width: 120px;
+    }
+    .cart a {
+      color: #343a40;
+      text-decoration: none;
+    }
+    .cart .badge {
+      font-size: 0.7rem;
+      vertical-align: super;
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .page_breadcrumb {
+      background: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+    }
+    .page_breadcrumb .breadcrumb {
+      margin-bottom: 0;
+      background: transparent;
+      padding: 0.6rem 0;
+    }
+    .page_breadcrumb .breadcrumb-item a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .page_breadcrumb .breadcrumb-item.active {
+      color: #6c757d;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section_title h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      border-bottom: 3px solid #007bff;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+
+    /* ===== PRODUCT DETAIL ===== */
+    .product_detail {
+      background: #fff;
+    }
+
+    /* Product image carousel */
+    .product_carousel_wrap .carousel {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      background: #f8f9fa;
+    }
+    .product_carousel_wrap .carousel-item img {
+      height: 380px;
+      object-fit: contain;
+      width: 100%;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+    /* Thumbnail indicators */
+    .carousel-indicators {
+      position: relative;
+      bottom: 0;
+      margin: 12px 0 0 0;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .carousel-indicators li {
+      width: 68px !important;
+      height: 68px !important;
+      border-radius: 8px;
+      overflow: hidden;
+      opacity: 0.6;
+      border: 2px solid transparent !important;
+      transition: opacity 0.2s, border-color 0.2s;
+      background: #f1f3f5;
+      text-indent: 0;
+      padding: 0;
+      margin: 0 4px;
+    }
+    .carousel-indicators li.active {
+      opacity: 1;
+      border-color: #007bff !important;
+    }
+    .carousel-indicators li img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Product info */
+    .product_info_wrap {
+      padding-left: 2rem;
+    }
+    @media (max-width: 767px) {
+      .product_info_wrap { padding-left: 0; margin-top: 2rem; }
+    }
+    .product_title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #212529;
+      margin-bottom: 0.5rem;
+    }
+    .product_category_badge a {
+      background: #e9ecef;
+      color: #495057;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+    .product_category_badge a:hover {
+      background: #007bff;
+      color: #fff;
+    }
+    .product_rating {
+      color: #ffc107;
+      font-size: 1rem;
+    }
+    .product_rating .empty-star {
+      color: #dee2e6;
+    }
+    .rating_count {
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-left: 6px;
+    }
+    .product_price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #212529;
+    }
+    .product_price .currency {
+      font-size: 1.2rem;
+      vertical-align: super;
+      margin-right: 2px;
+    }
+    .product_price .original_price {
+      font-size: 1.1rem;
+      color: #adb5bd;
+      text-decoration: line-through;
+      font-weight: 400;
+      margin-left: 10px;
+    }
+    .product_price .discount_badge {
+      font-size: 0.8rem;
+      background: #d4edda;
+      color: #155724;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .product_desc {
+      font-size: 0.94rem;
+      color: #495057;
+      line-height: 1.75;
+    }
+    .product_meta {
+      font-size: 0.88rem;
+      color: #6c757d;
+    }
+    .product_meta span {
+      font-weight: 600;
+      color: #343a40;
+    }
+
+    /* Quantity input */
+    .qty_section label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #343a40;
+      margin-bottom: 6px;
+    }
+    .quantity_wrap {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1.5px solid #ced4da;
+      border-radius: 6px;
+      overflow: hidden;
+      width: fit-content;
+    }
+    .qty_btn {
+      background: #f8f9fa;
+      border: none;
+      width: 36px;
+      height: 38px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #343a40;
+      cursor: pointer;
+      transition: background 0.2s;
+      outline: none;
+    }
+    .qty_btn:hover { background: #e9ecef; }
+    #qty_input {
+      width: 52px;
+      height: 38px;
+      border: none;
+      border-left: 1.5px solid #ced4da;
+      border-right: 1.5px solid #ced4da;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #212529;
+      outline: none;
+    }
+    /* Remove number input arrows */
+    #qty_input::-webkit-inner-spin-button,
+    #qty_input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    #qty_input[type=number] { -moz-appearance: textfield; }
+
+    /* CTA Buttons */
+    .btn_add_cart {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 28px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn_add_cart:hover {
+      background: #0056b3;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,123,255,0.3);
+    }
+    .btn_wishlist {
+      border: 1.5px solid #ced4da;
+      color: #343a40;
+      background: #fff;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      transition: border-color 0.2s, color 0.2s;
+      cursor: pointer;
+      outline: none;
+    }
+    .btn_wishlist:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+
+    /* Delivery info */
+    .delivery_info {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 0.88rem;
+    }
+    .delivery_info .d-flex {
+      gap: 10px;
+    }
+    .delivery_info i {
+      color: #007bff;
+      font-size: 1rem;
+      margin-top: 2px;
+    }
+    .delivery_info strong {
+      font-size: 0.9rem;
+      color: #212529;
+    }
+    .delivery_info p {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.84rem;
+    }
+
+    /* ===== RELATED PRODUCTS ===== */
+    .related_products {
+      background: #f8f9fa;
+    }
+    .related_title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #212529;
+      border-left: 4px solid #007bff;
+      padding-left: 14px;
+      margin-bottom: 0;
+    }
+    .related_card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .related_card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+      transform: translateY(-3px);
+    }
+    .related_card_img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+      background: #f1f3f5;
+    }
+    .related_card_body {
+      padding: 14px 16px;
+    }
+    .related_card_body h5 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 4px;
+    }
+    .related_card_body h5 a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .related_card_body h5 a:hover {
+      text-decoration: underline;
+    }
+    .related_card_price {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #212529;
+    }
+    .related_card_rating {
+      color: #ffc107;
+      font-size: 0.78rem;
+    }
+
+    /* ===== FEATURES ===== */
+    .feature {
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    }
+    .feature .section_title h1 {
+      color: #fff;
+      border-bottom-color: rgba(255,255,255,0.5);
+    }
+    .feature .col-md-4 {
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+    .feature .col-md-4:hover { background: rgba(255,255,255,0.22); }
+    .feature i { color: #fff; }
+    .feature h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+    .feature p { font-size: 0.88rem; color: rgba(255,255,255,0.85); }
+
+    /* ===== FOOTER ===== */
+    .footer_section { background: #f8f9fa; }
+    .footer_title h3 { font-size: 1.1rem; font-weight: 700; color: #343a40; }
+    .footer_links ul { list-style: none; padding-left: 0; }
+    .footer_links ul li { margin-bottom: 6px; }
+    .footer_links ul li a {
+      color: #6c757d; text-decoration: none; font-size: 0.9rem; transition: color 0.2s;
+    }
+    .footer_links ul li a:hover { color: #007bff; }
+
+    /* ===== BACK TO TOP ===== */
+    .backtop {
+      position: fixed; bottom: 30px; right: 30px; z-index: 999;
+    }
+    .backtop a {
+      background: #fff; border-radius: 50%; width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 576px) {
+      .pl-small-0 { padding-left: 0 !important; }
+      .pl-small-15 { padding-left: 15px !important; }
+      .mt-small-5 { margin-top: 1.5rem !important; }
+      .mb-small-5 { margin-bottom: 1.5rem !important; }
+      .product_carousel_wrap .carousel-item img { height: 250px; }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+  <!-- ============== HEADER MENU (from index.html) ============== -->
+  <section class="header_menu" id="header_menu">
+    <div class="container-fluid px-0 shadow">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+        <a class="navbar-brand pl-5 pl-small-0" href="index.html">
+          <span style="font-size:1.3rem; font-weight:800; letter-spacing:1px; color:#343a40; border:2px solid #343a40; padding:4px 12px;">
+            THE<br><span style="font-size:1.6rem;">DEMO</span><br>COMPANY
+          </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="product.html">Product <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="category.html">Category</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact Us</a>
+            </li>
+          </ul>
+          <div class="search mr-3">
+            <a href="search.html" class="btn btn-sm btn-outline-primary">Search</a>
+          </div>
+          <div class="cart mr-4">
+            <a href="cart.html">
+              <i class="fas fa-shopping-cart fa-2x"></i>
+              <span class="badge badge-pill badge-primary">24</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+  <!-- ============== HEADER MENU END ============== -->
+
+
+  <!-- ============== BREADCRUMB ============== -->
+  <section class="page_breadcrumb">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="product.html">Products</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Blue Denim Shirt</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+  <!-- ============== BREADCRUMB END ============== -->
+
+
+  <!-- ============== PRODUCT DETAIL ============== -->
+  <section class="product_detail py-5 my-3" id="product_detail">
+    <div class="container">
+      <div class="section_title text-center mb-5">
+        <h1 class="text-capitalize">Product Detail</h1>
+      </div>
+
+      <div class="row">
+
+        <!-- LEFT: Image Carousel -->
+        <div class="col-md-6">
+          <div class="product_carousel_wrap">
+            <div id="productCarousel" class="carousel slide" data-ride="carousel">
+
+              <!-- Thumbnail Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#productCarousel" data-slide-to="0" class="active">
+                  <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=200&auto=format&fit=crop" alt="thumb 1">
+                </li>
+                <li data-target="#productCarousel" data-slide-to="1">
+                  <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=200&auto=format&fit=crop" alt="thumb 2">
+                </li>
+                <li data-target="#productCarousel" data-slide-to="2">
+                  <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=200&auto=format&fit=crop" alt="thumb 3">
+                </li>
+              </ol>
+
+              <!-- Main Slides -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=700&auto=format&fit=crop" class="d-block w-100" alt="Blue Denim Shirt - View 1">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=700&auto=format&fit=crop" class="d-block w-100" alt="Blue Denim Shirt - View 2">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=700&auto=format&fit=crop" class="d-block w-100" alt="Blue Denim Shirt - View 3">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Product Info -->
+        <div class="col-md-6">
+          <div class="product_info_wrap">
+
+            <!-- Title -->
+            <h1 class="product_title">Blue Denim Shirt</h1>
+
+            <!-- Category Badge -->
+            <div class="product_category_badge mb-3">
+              <a href="category.html">SHIRT</a>
+            </div>
+
+            <!-- Rating -->
+            <div class="d-flex align-items-center mb-3">
+              <div class="product_rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star empty-star"></i>
+                <i class="far fa-star empty-star"></i>
+              </div>
+              <span class="rating_count">(42 reviews)</span>
+            </div>
+
+            <!-- Price -->
+            <div class="product_price mb-4">
+              <span class="currency">₹</span><span>400</span>
+              <span class="original_price">₹550</span>
+              <span class="discount_badge">27% OFF</span>
+            </div>
+
+            <!-- Description -->
+            <p class="product_desc mb-4">
+              A timeless blue denim shirt crafted from premium 100% cotton fabric. 
+              Features a classic button-down collar, chest pockets, and a relaxed fit 
+              perfect for both casual and smart-casual occasions. The durable fabric 
+              softens with every wash, making it a wardrobe staple that only gets better 
+              with time. Available in sizes S to XXL.
+            </p>
+
+            <!-- Product Meta -->
+            <div class="product_meta mb-4">
+              <div class="mb-1"><span>SKU:</span> TDC-DENIM-001</div>
+              <div class="mb-1"><span>Availability:</span> <span style="color:#28a745;">In Stock</span></div>
+              <div><span>Material:</span> 100% Premium Cotton</div>
+            </div>
+
+            <hr>
+
+            <!-- Quantity -->
+            <div class="qty_section mb-4">
+              <label>Quantity</label>
+              <div class="quantity_wrap">
+                <button class="qty_btn" id="qty_minus" type="button">−</button>
+                <input type="number" id="qty_input" name="quantity" value="1" min="1" max="10" readonly>
+                <button class="qty_btn" id="qty_plus" type="button">+</button>
+              </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="d-flex align-items-center mb-4" style="gap: 12px; flex-wrap: wrap;">
+              <a href="cart.html" class="btn_add_cart">
+                <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
+              </a>
+              <button class="btn_wishlist" title="Add to Wishlist">
+                <i class="far fa-heart mr-1"></i> Wishlist
+              </button>
+            </div>
+
+            <!-- Delivery Info -->
+            <div class="delivery_info">
+              <div class="d-flex mb-2">
+                <i class="fas fa-shipping-fast mt-1"></i>
+                <div class="ml-2">
+                  <strong>Free Delivery</strong>
+                  <p>On orders above ₹999. Estimated delivery: 3–7 business days.</p>
+                </div>
+              </div>
+              <div class="d-flex">
+                <i class="fas fa-undo mt-1"></i>
+                <div class="ml-2">
+                  <strong>Easy Returns</strong>
+                  <p>30-day hassle-free return policy on all clothing items.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- END RIGHT -->
+
+      </div>
+    </div>
+  </section>
+  <!-- ============== PRODUCT DETAIL END ============== -->
+
+
+  <!-- ============== RELATED PRODUCTS ============== -->
+  <section class="related_products py-5 mt-2 mb-5" id="related_products">
+    <div class="container">
+      <div class="d-flex align-items-center mb-5">
+        <h3 class="related_title">Related Products</h3>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Leather Jacket">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Leather Jacket</a></h5>
+              <div class="related_card_price">₹ 2,499</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Running Sneakers">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Running Sneakers</a></h5>
+              <div class="related_card_price">₹ 1,299</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Handbag Brown">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Handbag – Brown</a></h5>
+              <div class="related_card_price">₹ 1,799</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4a0028?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Summer Dress">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Summer Dress</a></h5>
+              <div class="related_card_price">₹ 899</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Casual Polo Shirt">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Casual Polo Shirt</a></h5>
+              <div class="related_card_price">₹ 649</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-6 mb-4">
+          <div class="related_card">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&auto=format&fit=crop"
+              class="related_card_img" alt="Classic White Tee">
+            <div class="related_card_body">
+              <div class="related_card_rating mb-1">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+              </div>
+              <h5><a href="product_detail.html">Classic White Tee</a></h5>
+              <div class="related_card_price">₹ 499</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ============== RELATED PRODUCTS END ============== -->
+
+
+  <!-- ============== FOOTER (from index.html) ============== -->
+  <section class="footer_section pt-5 pb-2" id="footer_section">
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-md-3 col-6 pl-5 pl-small-15">
+            <div class="footer_title">
+              <a href="index.html">
+                <span style="font-size:1rem; font-weight:800; letter-spacing:1px; color:#343a40; border:2px solid #343a40; padding:3px 8px; display:inline-block;">
+                  THE<br>DEMO<br>COMPANY
+                </span>
+              </a>
+            </div>
+            <div class="mt-3" style="font-size:0.88rem; color:#6c757d;">
+              Your one-stop destination for the latest fashion, accessories and lifestyle products.
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="footer_title pt-3 mb-3"><h3>Quick Links</h3></div>
+            <div class="footer_links">
+              <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="javascript:;">Offers &amp; Discounts</a></li>
+                <li><a href="javascript:;">Get Coupon</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="footer_title pt-3 mb-3"><h3>New Products</h3></div>
+            <div class="footer_links">
+              <ul>
+                <li><a href="javascript:;">Women's Clothing</a></li>
+                <li><a href="javascript:;">Fashion Accessories</a></li>
+                <li><a href="javascript:;">Men's Accessories</a></li>
+                <li><a href="javascript:;">Kids &amp; Toys</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="footer_title pt-3 mb-3"><h3>Support</h3></div>
+            <div class="footer_links">
+              <ul>
+                <li><a href="javascript:;">Frequently Asked Questions</a></li>
+                <li><a href="javascript:;">Terms &amp; Conditions</a></li>
+                <li><a href="javascript:;">Privacy Policy</a></li>
+                <li><a href="javascript:;">Report a Payment Issue</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="border-top mt-4">
+        <h6 class="text-center mt-3 text-muted">Copyright &copy;2024 The Demo Company. All rights reserved.</h6>
+      </div>
+    </footer>
+  </section>
+  <!-- ============== FOOTER END ============== -->
+
+  <!-- Back to Top -->
+  <div class="backtop">
+    <a href="#top" class="btn btn-lg btn-outline-danger" role="button">
+      <i class="fas fa-chevron-up text-dark"></i>
+    </a>
+  </div>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // Quantity +/- buttons
+    const qtyInput = document.getElementById('qty_input');
+    document.getElementById('qty_plus').addEventListener('click', function () {
+      let val = parseInt(qtyInput.value);
+      if (val < 10) qtyInput.value = val + 1;
+    });
+    document.getElementById('qty_minus').addEventListener('click', function () {
+      let val = parseInt(qtyInput.value);
+      if (val > 1) qtyInput.value = val - 1;
+    });
+
+    // Wishlist heart toggle
+    const wishlistBtn = document.querySelector('.btn_wishlist');
+    if (wishlistBtn) {
+      wishlistBtn.addEventListener('click', function () {
+        const icon = this.querySelector('i');
+        icon.classList.toggle('far');
+        icon.classList.toggle('fas');
+        icon.style.color = icon.classList.contains('fas') ? '#e74c3c' : '';
+      });
+    }
+  </script>
+
+</body>
+</html>
